@@ -3,9 +3,20 @@ const sizes = {
   md: '48rem',
   lg: '64rem',
   xl: '80rem',
+  xxl: '96rem',
 }
 
 export const defaultTheme = {
+  sizes,
+
+  screens: {
+    sm: `(min-width: ${sizes.sm})`,
+    md: `(min-width: ${sizes.md})`,
+    lg: `(min-width: ${sizes.lg})`,
+    xl: `(min-width: ${sizes.xl})`,
+    xxl: `(min-width: ${sizes.xxl})`,
+  },
+
   colors: {
     /** Base */
 
@@ -31,12 +42,8 @@ export const defaultTheme = {
     'yellow-dark': '#C47F17',
   },
 
-  sizes,
-
-  screens: {
-    sm: `(min-width: ${sizes.sm})`,
-    md: `(min-width: ${sizes.md})`,
-    lg: `(min-width: ${sizes.lg})`,
-    xl: `(min-width: ${sizes.xl})`,
+  fontFamily: {
+    header: `'Baloo 2', sans-serif`,
+    text: `'Roboto', sans-serif`,
   },
 }

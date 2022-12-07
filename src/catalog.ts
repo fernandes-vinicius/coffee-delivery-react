@@ -1,133 +1,160 @@
-import { v4 as uuid } from 'uuid'
+import { IProduct } from '~/types'
 
-import { Coffee } from '~/reducers/coffees/reducer'
+//* START: coffee catalog assets
+import expresso from '~/assets/coffeeCatalog/expresso.svg'
+import expressoAmericano from '~/assets/coffeeCatalog/expresso-americano.svg'
+import expressoCremoso from '~/assets/coffeeCatalog/expresso-cremoso.svg'
+import expressoGelado from '~/assets/coffeeCatalog/expresso-gelado.svg'
+import cafeComLeite from '~/assets/coffeeCatalog/cafe-com-leite.svg'
+import latte from '~/assets/coffeeCatalog/latte.svg'
+import capuccino from '~/assets/coffeeCatalog/capuccino.svg'
+import macchiato from '~/assets/coffeeCatalog/macchiato.svg'
+import mocaccino from '~/assets/coffeeCatalog/mocaccino.svg'
+import chocolateQuente from '~/assets/coffeeCatalog/chocolate-quente.svg'
+import cubano from '~/assets/coffeeCatalog/cubano.svg'
+import havaiano from '~/assets/coffeeCatalog/havaiano.svg'
+import arabe from '~/assets/coffeeCatalog/arabe.svg'
+import irlandes from '~/assets/coffeeCatalog/irlandes.svg'
+//* END: coffee catalog assets
 
-// catalog assets
-import expresso from '~/assets/catalog/expresso.svg'
-import expressoAmericano from '~/assets/catalog/expresso-americano.svg'
-import expressoCremoso from '~/assets/catalog/expresso-cremoso.svg'
-import expressoGelado from '~/assets/catalog/expresso-gelado.svg'
-import cafeComLeite from '~/assets/catalog/cafe-com-leite.svg'
-import latte from '~/assets/catalog/latte.svg'
-import capuccino from '~/assets/catalog/capuccino.svg'
-import macchiato from '~/assets/catalog/macchiato.svg'
-import mocaccino from '~/assets/catalog/mocaccino.svg'
-import chocolateQuente from '~/assets/catalog/chocolate-quente.svg'
-import cubano from '~/assets/catalog/cubano.svg'
-import havaiano from '~/assets/catalog/havaiano.svg'
-import arabe from '~/assets/catalog/arabe.svg'
-import irlandes from '~/assets/catalog/irlandes.svg'
-
-export const coffeeCatalog: Coffee[] = [
+export const coffeeCatalog: IProduct[] = [
   {
-    id: uuid(),
-    amount: 990,
+    id: 1,
+    price: 990,
+    amount: 1,
     name: 'Expresso Tradicional',
     description: `O tradicional café feito com água quente e grãos moídos`,
-    imagePath: expresso,
+    image: expresso,
+    tags: ['tradicional'],
   },
 
   {
-    id: uuid(),
-    amount: 990,
+    id: 2,
+    price: 990,
+    amount: 1,
     name: 'Expresso Americano',
     description: `Expresso diluído, menos intenso que o tradicional`,
-    imagePath: expressoAmericano,
+    image: expressoAmericano,
+    tags: ['tradicional'],
   },
 
   {
-    id: uuid(),
-    amount: 990,
+    id: 3,
+    price: 990,
+    amount: 1,
     name: 'Expresso Cremoso',
     description: `Café expresso tradicional com espuma cremosa`,
-    imagePath: expressoCremoso,
+    image: expressoCremoso,
+    tags: ['tradicional'],
   },
 
   {
-    id: uuid(),
-    amount: 990,
+    id: 4,
+    price: 990,
+    amount: 1,
     name: 'Expresso Gelado',
     description: `Bebida preparada com café expresso e cubos de gelo`,
-    imagePath: expressoGelado,
+    image: expressoGelado,
+    tags: ['tradicional', 'gelado'],
   },
 
   {
-    id: uuid(),
-    amount: 990,
+    id: 5,
+    price: 990,
+    amount: 1,
     name: 'Café com Leite',
     description: `Meio a meio de expresso tradicional com leite vaporizado`,
-    imagePath: cafeComLeite,
+    image: cafeComLeite,
+    tags: ['tradicional', 'com leite'],
   },
 
   {
-    id: uuid(),
-    amount: 990,
+    id: 6,
+    price: 990,
+    amount: 1,
     name: 'Latte',
     description: `Uma dose de café expresso com o dobro de leite e espuma cremosa`,
-    imagePath: latte,
+    image: latte,
+    tags: ['tradicional', 'com leite'],
   },
 
   {
-    id: uuid(),
-    amount: 990,
+    id: 7,
+    price: 990,
+    amount: 1,
     name: 'Capuccino',
     description: `Bebida com canela feita de doses iguais de café, leite e espuma`,
-    imagePath: capuccino,
+    image: capuccino,
+    tags: ['tradicional', 'com leite'],
   },
 
   {
-    id: uuid(),
-    amount: 990,
+    id: 8,
+    price: 990,
+    amount: 1,
     name: 'Macchiato',
     description: `Café expresso misturado com um pouco de leite quente e espuma`,
-    imagePath: macchiato,
+    image: macchiato,
+    tags: ['tradicional', 'com leite'],
   },
 
   {
-    id: uuid(),
-    amount: 990,
+    id: 9,
+    price: 990,
+    amount: 1,
     name: 'Mocaccino',
     description: `Café expresso com calda de chocolate, pouco leite e espuma`,
-    imagePath: mocaccino,
+    image: mocaccino,
+    tags: ['tradicional', 'com leite'],
   },
 
   {
-    id: uuid(),
-    amount: 990,
+    id: 10,
+    price: 990,
+    amount: 1,
     name: 'Chocolate Quente',
     description: `Bebida feita com chocolate dissolvido no leite quente e café`,
-    imagePath: chocolateQuente,
+    image: chocolateQuente,
+    tags: ['especial', 'com leite'],
   },
 
   {
-    id: uuid(),
-    amount: 990,
+    id: 11,
+    price: 990,
+    amount: 1,
     name: 'Cubano',
     description: `Drink gelado de café expresso com rum, creme de leite e hortelã`,
-    imagePath: cubano,
+    image: cubano,
+    tags: ['especial', 'com leite'],
   },
 
   {
-    id: uuid(),
-    amount: 990,
+    id: 12,
+    price: 990,
+    amount: 1,
     name: 'Havaiano',
     description: `Bebida adocicada preparada com café e leite de coco`,
-    imagePath: havaiano,
+    image: havaiano,
+    tags: ['especial', 'com leite', 'gelado'],
   },
 
   {
-    id: uuid(),
-    amount: 990,
+    id: 13,
+    price: 990,
+    amount: 1,
     name: 'Árabe',
     description: `Bebida preparada com grãos de café árabe e especiarias`,
-    imagePath: arabe,
+    image: arabe,
+    tags: ['especial'],
   },
 
   {
-    id: uuid(),
-    amount: 990,
+    id: 14,
+    price: 990,
+    amount: 1,
     name: 'Irlandês',
-    description: `Bebida a base de café, uísque irlandês, açúcar e chantilly`,
-    imagePath: irlandes,
+    description: `Bebida a base de café, uísque irlandês, açúcar e Chantilly`,
+    image: irlandes,
+    tags: ['especial', 'alcoólico'],
   },
 ]

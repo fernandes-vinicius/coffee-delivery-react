@@ -1,65 +1,100 @@
 import { Coffee, Package, ShoppingCart, Timer } from 'phosphor-react'
 
-import homeImg from '~/assets/home-img.svg'
-import { useCoffee } from '~/hooks/useCoffee'
+import homeBannerImg from '~/assets/home-banner.svg'
+import homeBackgroundImg from '~/assets/home-background.svg'
+import { IProduct } from '~/types'
+import { coffeeCatalog } from '~/catalog'
+import { useCart } from '~/hooks/useCart'
+
+import { ProductCard } from './components/ProductCard'
 
 import {
-  GridItem,
-  GridItemIconFour,
-  GridItemIconOne,
-  GridItemIconThree,
-  GridItemIconTwo,
-  GridItems,
+  BackgroundImage,
+  IntroItem,
+  ItemIconFour,
+  ItemIconOne,
+  ItemIconThree,
+  ItemIconTwo,
+  IntroItemsContainer,
   HomeContainer,
   IntroContainer,
+  IntroDescription,
+  IntroImage,
+  Heading,
+  ProductList,
+  IntroTitle,
 } from './styles'
 
 export function Home() {
-  const { coffees } = useCoffee()
+  const { addProduct } = useCart()
+
+  function handleAddToCart(product: IProduct, amount: number) {
+    addProduct(product, amount)
+  }
 
   return (
     <HomeContainer>
       <IntroContainer>
+        <BackgroundImage src={homeBackgroundImg} alt="" />
+
         <div>
-          <h1>Encontre o café perfeito para qualquer hora do dia</h1>
-          <p>
+          <IntroTitle>
+            Encontre o café perfeito para qualquer hora do dia
+          </IntroTitle>
+
+          <IntroDescription>
             Com o Coffee Delivery você recebe seu café onde estiver, a qualquer
             hora
-          </p>
+          </IntroDescription>
 
-          <GridItems>
-            <GridItem>
-              <GridItemIconOne>
-                <ShoppingCart />
-              </GridItemIconOne>
+          <IntroItemsContainer>
+            <IntroItem>
+              <ItemIconOne>
+                <ShoppingCart size={16} weight="fill" />
+              </ItemIconOne>
               Compra simples e segura
-            </GridItem>
+            </IntroItem>
 
-            <GridItem>
-              <GridItemIconTwo>
-                <Package />
-              </GridItemIconTwo>
+            <IntroItem>
+              <ItemIconTwo>
+                <Package size={16} weight="fill" />
+              </ItemIconTwo>
               Embalagem mantém o café intacto
-            </GridItem>
+            </IntroItem>
 
-            <GridItem>
-              <GridItemIconThree>
-                <Timer />
-              </GridItemIconThree>
+            <IntroItem>
+              <ItemIconThree>
+                <Timer size={16} weight="fill" />
+              </ItemIconThree>
               Entrega rápida e rastreada
-            </GridItem>
+            </IntroItem>
 
-            <GridItem>
-              <GridItemIconFour>
-                <Coffee />
-              </GridItemIconFour>
+            <IntroItem>
+              <ItemIconFour>
+                <Coffee size={16} weight="fill" />
+              </ItemIconFour>
               O café chega fresquinho até você
-            </GridItem>
-          </GridItems>
+            </IntroItem>
+          </IntroItemsContainer>
         </div>
 
-        <img src={homeImg} alt="" />
+        <IntroImage src={homeBannerImg} alt="" />
       </IntroContainer>
+
+      <Heading>Nossos cafés</Heading>
+
+      <ProductList>
+        {/* coffee catalog */}
+        {coffeeCatalog.map((coffee) => (
+          <ProductCard
+            key={coffee.id}
+            product={coffee}
+            onAddToCart={handleAddToCart}
+          />
+        ))}
+
+        {/* others catalogs */}
+      </ProductList>
     </HomeContainer>
   )
 }

@@ -4,43 +4,32 @@ export const GlobalStyle = createGlobalStyle`
   * {
     margin: 0;
     padding: 0;
+    outline: 0;
     box-sizing: border-box;
   }
 
-  :focus {
-    outline: 0;
-    box-shadow: 0 0 0 2px ${(props) => props.theme.colors.yellow};
-  }
-
   body {
-    overflow-x: hidden;
-    background: ${(props) => props.theme.colors.background};
     color: ${(props) => props.theme.colors.text};
+    background: ${(props) => props.theme.colors.background};
     -webkit-font-smoothing: antialiased;
   }
 
-  body, input, textarea, button {
-    font-family: 'Roboto', sans-serif;
+  body, input, button {
+    font-family:  ${(props) => props.theme.fontFamily.text};
     font-weight: 400;
     font-size: 1rem;
     line-height: 1.3;
   }
 
   button {
-    margin: 0;
-    padding: 0;
     border: 0;
     background: transparent;
+    line-height: 0;
     cursor: pointer;
   }
 
   img {
     user-select: none;
     pointer-events: none;
-  }
-
-  a:focus {
-    outline: transparent;
-    box-shadow: none;
   }
 `

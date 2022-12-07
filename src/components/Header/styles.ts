@@ -5,11 +5,9 @@ export const HeaderContainer = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: 2rem 0;
-
-  background: ${(props) => props.theme.colors.background};
 `
 
-export const ActionsBox = styled.div`
+export const ActionsContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -20,15 +18,20 @@ export const Location = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.25rem;
   padding: 0.5rem;
-  cursor: default;
+  gap: 0.25rem;
+
+  min-height: 2.375rem;
 
   background: ${(props) => props.theme.colors['purple-light']};
   border-radius: 6px;
 
   font-size: 0.875rem;
   color: ${(props) => props.theme.colors['purple-dark']};
+
+  > svg {
+    color: ${(props) => props.theme.colors.purple};
+  }
 `
 
 interface CartProps {
@@ -43,10 +46,9 @@ export const Cart = styled.button<CartProps>`
   align-items: center;
   padding: 0.5rem;
   gap: 0.25rem;
-  isolation: isolate;
 
-  width: 2.375rem;
-  height: 2.375rem;
+  width: 100%;
+  min-height: 2.375rem;
 
   background: ${(props) => props.theme.colors['yellow-light']};
   border-radius: 6px;
@@ -67,7 +69,9 @@ export const Cart = styled.button<CartProps>`
     position: absolute;
     top: -0.5rem;
     right: -0.522rem;
-    width: 1.25rem;
+
+    width: auto;
+    min-width: 1.25rem;
     height: 1.25rem;
 
     background: ${(props) => props.theme.colors['yellow-dark']};
@@ -76,7 +80,6 @@ export const Cart = styled.button<CartProps>`
     font-weight: 700;
     font-size: 0.75rem;
     text-align: center;
-    letter-spacing: -0.06em;
 
     color: ${(props) => props.theme.colors.white};
   }
