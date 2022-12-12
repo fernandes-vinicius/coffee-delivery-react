@@ -1,14 +1,33 @@
+import { useState } from 'react'
+
 import { Bank, CreditCard, CurrencyDollar, Money } from 'phosphor-react'
+
+import { PaymentTypes } from '~/pages/Checkout'
 
 import {
   InfoContainer,
   InfoDetailsContainer,
-  ListPaymentOptionsContainer,
   PaymentContainer,
   PaymentOption,
+  PaymentOptionsContainer,
 } from './styles'
 
-export function Payment() {
+interface PaymentProps {
+  onChangePaymentType: (paymentType: PaymentTypes) => void
+}
+
+export function Payment({ onChangePaymentType }: PaymentProps) {
+  const [paymentType, setPaymentType] = useState<PaymentTypes | null>(null)
+
+  function handleChangePaymentType(newPaymentType: PaymentTypes) {
+    setPaymentType(newPaymentType)
+    onChangePaymentType(newPaymentType)
+  }
+
+  const isCreditCardSelected = paymentType === 'credit_card'
+  const isDebitCardSelected = paymentType === 'debit_card'
+  const isMoneySelected = paymentType === 'money'
+
   return (
     <PaymentContainer>
       <InfoContainer>
@@ -22,22 +41,28 @@ export function Payment() {
         </InfoDetailsContainer>
       </InfoContainer>
 
-      <ListPaymentOptionsContainer>
-        <PaymentOption>
-          <CreditCard size={16} />
-          <span>Cartão de crédito</span>
+      <PaymentOptionsContainer>
+        <PaymentOption
+          selected={isCreditCardSelected}
+          onClick={() => handleChangePaymentType('credit_card')}
+        >
+          <CreditCard size={16} /> Cartão de crédito
         </PaymentOption>
 
-        <PaymentOption>
-          <Bank size={16} />
-          <span>Cartão de crédito</span>
+        <PaymentOption
+          selected={isDebitCardSelected}
+          onClick={() => handleChangePaymentType('debit_card')}
+        >
+          <Bank size={16} /> Cartão de débito
         </PaymentOption>
 
-        <PaymentOption>
-          <Money size={16} />
-          <span>Cartão de crédito</span>
+        <PaymentOption
+          selected={isMoneySelected}
+          onClick={() => handleChangePaymentType('money')}
+        >
+          <Money size={16} /> Dinheiro
         </PaymentOption>
-      </ListPaymentOptionsContainer>
+      </PaymentOptionsContainer>
     </PaymentContainer>
   )
 }

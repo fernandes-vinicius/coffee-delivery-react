@@ -1,7 +1,10 @@
-import { Trash } from 'phosphor-react'
+import { useEffect, useState } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
+
 import { zodResolver } from '@hookform/resolvers/zod'
-import * as zod from 'zod'
+import { Trash } from 'phosphor-react'
+import { z } from 'zod'
 
 import { SelectAmount } from '~/components/SelectAmount'
 import { useCart } from '~/hooks/useCart'
@@ -9,36 +12,49 @@ import { formatCurrency } from '~/utils/formatCurrency'
 
 import { AddressForm } from './components/AddressForm'
 import { Payment } from './components/Payment'
-
+import Success from './components/Success'
 import {
-  AddressAndPaymentContainer,
   ButtonConfirmOrder,
   ButtonRemove,
   CheckoutContainer,
-  OrderDetailItem,
-  OrderDetailsContainer,
-  SelectedCoffee,
-  SelectedCoffeeActionsContainer,
-  SelectedCoffeeDetails,
-  SelectedCoffeeInfo,
-  SelectedCoffeesCardContainer,
+  ProductActionsContainer,
+  ProductItem,
+  ProductItemDetails,
+  ProductItemInfo,
+  ProductPrice,
+  SelectProductsCard,
   Title,
 } from './styles'
 
-const addressFormValidationSchema = zod.object({
-  postalCode: zod.string(),
-  street: zod.string(),
-  number: zod.string(),
-  complement: zod.string().nullable(),
-  district: zod.string(),
-  city: zod.string(),
-  state: zod.string(),
+const DEFAULT_DELIVERY_FEE = 350 /** standard shipping fee charged */
+
+const addressFormValidationSchema = z.object({
+  postalCode: z.string().trim().min(8, 'Informe um CEP válido'),
+  street: z.string().trim().min(3, 'Informe a rua'),
+  number: z.string().trim().min(1, 'Informe o número'),
+  complement: z.string().trim().nullable(),
+  district: z.string().trim().min(3, 'Informe o bairro'),
+  city: z.string().trim().min(3, 'Informe a cidade'),
+  state: z.string().trim().min(2, 'Informe o estado (UF)'),
 })
 
-type AddressFormData = zod.infer<typeof addressFormValidationSchema>
+export type AddressFormData = z.infer<typeof addressFormValidationSchema>
+
+export type PaymentTypes = 'credit_card' | 'debit_card' | 'money'
+
+export interface IOrderData {
+  address: AddressFormData
+  paymentType: PaymentTypes
+  sumTotalItems: number
+  deliveryFee: number
+  total: number
+}
 
 export function Checkout() {
-  const { cart, removeProduct, updateProductAmount } = useCart()
+  const navigate = useNavigate()
+
+  const [paymentType, setPaymentType] = useState<PaymentTypes | null>(null)
+  const [success, setSuccess] = useState(false)
 
   const addressForm = useForm<AddressFormData>({
     resolver: zodResolver(addressFormValidationSchema),
@@ -52,7 +68,16 @@ export function Checkout() {
       state: '',
     },
   })
-  const { handleSubmit, watch, reset } = addressForm
+  const { handleSubmit, watch } = addressForm
+
+  const { cart, totalItems, removeProduct, updateProductAmount } = useCart()
+
+  const sumTotalItems = cart.reduce((acc, currentValue) => {
+    acc += currentValue.price * currentValue.amount
+    return acc
+  }, 0)
+  const deliveryFee = DEFAULT_DELIVERY_FEE
+  const total = sumTotalItems + deliveryFee
 
   function handleDeleteProduct(productId: number) {
     removeProduct(productId)
@@ -62,67 +87,96 @@ export function Checkout() {
     updateProductAmount(productId, amount)
   }
 
+  function handleConfirmOrder(addressData: AddressFormData) {
+    if (paymentType) {
+      const orderData: IOrderData = {
+        address: addressData,
+        paymentType,
+        sumTotalItems,
+        deliveryFee,
+        total,
+      }
+
+      console.log('orderData', orderData)
+
+      setSuccess(true)
+    }
+  }
+
+  // returns user to home page if cart is empty
+  useEffect(() => {
+    if (totalItems <= 0) navigate('/')
+  }, [navigate, totalItems])
+
+  if (success) {
+    const address = watch()
+    return <Success address={address} />
+  }
+
   return (
     <CheckoutContainer>
-      <div>
-        <Title>Complete seu pedido</Title>
-        <AddressAndPaymentContainer>
-          AddressAndPaymentContainer
-        </AddressAndPaymentContainer>
-      </div>
+      <form onSubmit={handleSubmit(handleConfirmOrder)}>
+        <div>
+          <Title>Complete seu pedido</Title>
 
-      <div>
-        <Title>Cafés selecionados</Title>
-        <SelectedCoffeesCardContainer>
-          {cart.map((product) => (
-            <SelectedCoffee key={product.id}>
-              <SelectedCoffeeInfo>
-                <img src={product.image} alt="" />
+          <FormProvider {...addressForm}>
+            <AddressForm />
+          </FormProvider>
 
-                <SelectedCoffeeDetails>
-                  <span>{product.name}</span>
+          <Payment
+            onChangePaymentType={(newPaymentType) => {
+              setPaymentType(newPaymentType)
+            }}
+          />
+        </div>
 
-                  <SelectedCoffeeActionsContainer>
-                    <SelectAmount
-                      defaultValue={product.amount}
-                      onChange={(newAmount) => {
-                        handleUpdateProductAmount(product.id, newAmount)
-                      }}
-                    />
+        <div>
+          <Title>Cafés selecionados</Title>
 
-                    <ButtonRemove
-                      onClick={() => handleDeleteProduct(product.id)}
-                    >
-                      <Trash size={16} /> Remover
-                    </ButtonRemove>
-                  </SelectedCoffeeActionsContainer>
-                </SelectedCoffeeDetails>
-              </SelectedCoffeeInfo>
+          <SelectProductsCard>
+            {cart.map((product) => (
+              <ProductItem key={product.id}>
+                <ProductItemInfo>
+                  <img src={product.image} alt="" />
 
-              <span>{`R$ ${formatCurrency(product.price)}`}</span>
-            </SelectedCoffee>
-          ))}
+                  <ProductItemDetails>
+                    <span>{product.name}</span>
 
-          <OrderDetailsContainer>
-            <OrderDetailItem>
-              <span>Total de itens</span>
-              {`R$ 29,70`}
-            </OrderDetailItem>
+                    <ProductActionsContainer>
+                      <SelectAmount
+                        defaultValue={product.amount}
+                        onChange={(newAmount) => {
+                          handleUpdateProductAmount(product.id, newAmount)
+                        }}
+                      />
 
-            <OrderDetailItem>
-              <span>Entrega</span>
-              {`R$ 3,50`}
-            </OrderDetailItem>
+                      <ButtonRemove
+                        onClick={() => handleDeleteProduct(product.id)}
+                      >
+                        <Trash size={16} /> Remover
+                      </ButtonRemove>
+                    </ProductActionsContainer>
+                  </ProductItemDetails>
+                </ProductItemInfo>
 
-            <OrderDetailItem>
-              <strong>Total</strong>
-              <strong>{`R$ 3,50`}</strong>
-            </OrderDetailItem>
-          </OrderDetailsContainer>
+                <ProductPrice>
+                  {`R$ ${formatCurrency(product.price)}`}
+                </ProductPrice>
+              </ProductItem>
+            ))}
 
-          <ButtonConfirmOrder>Confirmar Pedido</ButtonConfirmOrder>
-        </SelectedCoffeesCardContainer>
-      </div>
+            <div>Total items R$ {formatCurrency(sumTotalItems)}</div>
+
+            <div>Total delivery R$ {formatCurrency(deliveryFee)}</div>
+
+            <strong>Total R$ {formatCurrency(total)}</strong>
+
+            <ButtonConfirmOrder type="submit">
+              Confirmar pedido
+            </ButtonConfirmOrder>
+          </SelectProductsCard>
+        </div>
+      </form>
     </CheckoutContainer>
   )
 }

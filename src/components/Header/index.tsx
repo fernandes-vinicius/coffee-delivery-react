@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom'
+
 import { MapPin, ShoppingCart } from 'phosphor-react'
 
 import logoCoffeeDelivery from '~/assets/logo-coffee-delivery.svg'
+
 import { useCart } from '~/hooks/useCart'
 
 import { ActionsContainer, Cart, HeaderContainer, Location } from './styles'
@@ -21,7 +23,7 @@ export function Header() {
           <MapPin size={22} weight="fill" /> Porto Alegre - RS
         </Location>
 
-        <Link to="/checkout">
+        <Link to={totalItems > 0 ? '/checkout' : '/'}>
           <Cart title="Ver carrinho" counter={totalItems}>
             <ShoppingCart size={22} weight="fill" />
           </Cart>

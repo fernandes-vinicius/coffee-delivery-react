@@ -1,12 +1,12 @@
 import { createContext, ReactNode, useEffect, useReducer } from 'react'
 
-import { IProduct } from '~/types'
-import { cartReducer } from '~/reducers/cart/reducer'
 import {
   addProductAction,
   removeProductAction,
   updateProductAmountAction,
 } from '~/reducers/cart/actions'
+import { cartReducer } from '~/reducers/cart/reducer'
+import { IProduct } from '~/types'
 
 interface ICartContext {
   cart: IProduct[]

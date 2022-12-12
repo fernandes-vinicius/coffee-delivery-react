@@ -96,7 +96,7 @@ export const IconButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 0.5rem;
+  padding: 0.5rem;
   gap: 0.5rem;
 
   width: 100%;

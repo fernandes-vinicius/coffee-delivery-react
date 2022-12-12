@@ -1,21 +1,19 @@
-import { IProduct } from '~/types'
-
-//* START: coffee catalog assets
-import expresso from '~/assets/coffeeCatalog/expresso.svg'
+import arabe from '~/assets/coffeeCatalog/arabe.svg'
+import cafeComLeite from '~/assets/coffeeCatalog/cafe-com-leite.svg'
+import capuccino from '~/assets/coffeeCatalog/capuccino.svg'
+import chocolateQuente from '~/assets/coffeeCatalog/chocolate-quente.svg'
+import cubano from '~/assets/coffeeCatalog/cubano.svg'
 import expressoAmericano from '~/assets/coffeeCatalog/expresso-americano.svg'
 import expressoCremoso from '~/assets/coffeeCatalog/expresso-cremoso.svg'
 import expressoGelado from '~/assets/coffeeCatalog/expresso-gelado.svg'
-import cafeComLeite from '~/assets/coffeeCatalog/cafe-com-leite.svg'
+import expresso from '~/assets/coffeeCatalog/expresso.svg'
+import havaiano from '~/assets/coffeeCatalog/havaiano.svg'
+import irlandes from '~/assets/coffeeCatalog/irlandes.svg'
 import latte from '~/assets/coffeeCatalog/latte.svg'
-import capuccino from '~/assets/coffeeCatalog/capuccino.svg'
 import macchiato from '~/assets/coffeeCatalog/macchiato.svg'
 import mocaccino from '~/assets/coffeeCatalog/mocaccino.svg'
-import chocolateQuente from '~/assets/coffeeCatalog/chocolate-quente.svg'
-import cubano from '~/assets/coffeeCatalog/cubano.svg'
-import havaiano from '~/assets/coffeeCatalog/havaiano.svg'
-import arabe from '~/assets/coffeeCatalog/arabe.svg'
-import irlandes from '~/assets/coffeeCatalog/irlandes.svg'
-//* END: coffee catalog assets
+
+import { IProduct } from '~/types'
 
 export const coffeeCatalog: IProduct[] = [
   {

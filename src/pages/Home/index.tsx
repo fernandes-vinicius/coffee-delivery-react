@@ -1,13 +1,13 @@
 import { Coffee, Package, ShoppingCart, Timer } from 'phosphor-react'
 
-import homeBannerImg from '~/assets/home-banner.svg'
 import homeBackgroundImg from '~/assets/home-background.svg'
-import { IProduct } from '~/types'
+import homeBannerImg from '~/assets/home-banner.svg'
+
 import { coffeeCatalog } from '~/catalog'
 import { useCart } from '~/hooks/useCart'
+import { IProduct } from '~/types'
 
 import { ProductCard } from './components/ProductCard'
-
 import {
   BackgroundImage,
   IntroItem,
@@ -93,7 +93,7 @@ export function Home() {
           />
         ))}
 
-        {/* others catalogs */}
+        {/* TODO; others catalogs */}
       </ProductList>
     </HomeContainer>
   )

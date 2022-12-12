@@ -1,9 +1,10 @@
 import { useState } from 'react'
+
 import { ShoppingCart } from 'phosphor-react'
 
+import { SelectAmount } from '~/components/SelectAmount'
 import { IProduct } from '~/types'
 import { formatCurrency } from '~/utils/formatCurrency'
-import { SelectAmount } from '~/components/SelectAmount'
 
 import {
   ActionsContainer,

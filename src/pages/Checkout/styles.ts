@@ -1,20 +1,17 @@
 import styled from 'styled-components'
 
 export const CheckoutContainer = styled.main`
-  display: grid;
-  align-items: flex-start;
-  gap: 2rem;
-
-  @media ${(props) => props.theme.screens.lg} {
-    grid-template-columns: 1fr 40%;
+  > form {
+    display: grid;
+    align-items: flex-start;
+    gap: 2rem;
   }
-`
 
-export const AddressAndPaymentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.75rem;
+  @media ${(props) => props.theme.screens.xl} {
+    > form {
+      grid-template-columns: 1fr 40%;
+    }
+  }
 `
 
 export const Title = styled.h2`
@@ -27,58 +24,62 @@ export const Title = styled.h2`
   color: ${(props) => props.theme.colors.subtitle};
 `
 
-export const SelectedCoffeesCardContainer = styled.div`
+export const SelectProductsCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 2.5rem;
   gap: 1.5rem;
 
+  width: 100%;
+
   background: ${(props) => props.theme.colors.card};
   border-radius: 6px 44px;
 `
 
-export const SelectedCoffee = styled.div`
+export const ProductItem = styled.div`
   display: flex;
+  flex-direction: column-reverse;
   justify-content: space-between;
   align-items: flex-start;
   padding: 0.5rem 0.25rem 1.5rem;
 
   width: 100%;
-
-  font-weight: 700;
-  color: ${(props) => props.theme.colors.text};
-
   border-bottom: 1px solid ${(props) => props.theme.colors.button};
 
-  img {
+  @media ${(props) => props.theme.screens.lg} {
+    flex-direction: row;
+  }
+`
+
+export const ProductItemInfo = styled.div`
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+
+  flex-grow: 1;
+
+  > img {
     width: 100%;
     max-width: 4rem;
   }
 `
 
-export const SelectedCoffeeInfo = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 1.25rem;
-`
-
-export const SelectedCoffeeDetails = styled.div`
+export const ProductItemDetails = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 0.5rem;
 
+  flex-grow: 1;
+
   > span {
-    font-weight: 400;
     color: ${(props) => props.theme.colors.subtitle};
   }
 `
 
-export const SelectedCoffeeActionsContainer = styled.div`
+export const ProductActionsContainer = styled.div`
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
 `
@@ -87,15 +88,17 @@ export const ButtonRemove = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 0.5rem;
+  padding: 0.5rem;
   gap: 0.25rem;
 
+  width: 100%;
   min-height: 2rem;
 
   background: ${(props) => props.theme.colors.button};
   border-radius: 6px;
 
   font-size: 0.75rem;
+  line-height: 1.6;
   text-transform: uppercase;
 
   transition: background 0.1s ease-in-out, color 0.1s ease-in-out;
@@ -114,30 +117,17 @@ export const ButtonRemove = styled.button`
   }
 `
 
-export const OrderDetailsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 0.75rem;
-
-  width: 100%;
-`
-
-export const OrderDetailItem = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.5rem;
+export const ProductPrice = styled.span`
+  font-weight: 700;
+  font-size: 1rem;
+  text-align: right;
 
   width: 100%;
 
-  & > :not(strong):first-child {
-    font-size: 0.875rem;
-  }
+  color: ${(props) => props.theme.colors.text};
 
-  strong {
-    font-size: 1.25rem;
+  @media ${(props) => props.theme.screens.lg} {
+    width: auto;
   }
 `
 
@@ -148,7 +138,7 @@ export const ButtonConfirmOrder = styled.button`
   padding: 0.75rem 0.5rem;
   gap: 0.25rem;
 
-  width: 368px;
+  width: 100%;
   min-height: 2.875rem;
 
   background: ${(props) => props.theme.colors.yellow};
@@ -157,11 +147,9 @@ export const ButtonConfirmOrder = styled.button`
   font-weight: 700;
   font-size: 0.875rem;
   line-height: 1.6;
-
   text-transform: uppercase;
 
   color: ${(props) => props.theme.colors.white};
-  font-stretch: 100;
 
   transition: background 0.1s ease-in-out;
 
