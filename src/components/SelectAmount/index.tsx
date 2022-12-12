@@ -33,13 +33,13 @@ export function SelectAmount(props: SelectAmountProps) {
 
   return (
     <SelectContainer>
-      <button onClick={handleDecrement}>
+      <button type="button" onClick={handleDecrement}>
         <Minus size={14} weight="bold" />
       </button>
 
       <span>{currentValue}</span>
 
-      <button onClick={handleIncrement}>
+      <button type="button" onClick={handleIncrement}>
         <Plus size={14} weight="bold" />
       </button>
     </SelectContainer>

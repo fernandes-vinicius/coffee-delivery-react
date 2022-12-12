@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
@@ -66,10 +66,13 @@ export function Checkout() {
       state: '',
     },
   })
-  const { handleSubmit, reset: resetForm } = addressForm
+  const {
+    handleSubmit,
+    reset: resetForm,
+    formState: { isSubmitting },
+  } = addressForm
 
-  const { cart, totalItems, removeProduct, updateProductAmount, resetCart } =
-    useCart()
+  const { cart, removeProduct, updateProductAmount, resetCart } = useCart()
 
   const sumTotalItems = cart.reduce((acc, currentValue) => {
     acc += currentValue.price * currentValue.amount
@@ -103,14 +106,11 @@ export function Checkout() {
 
       setPaymentType(null)
 
-      navigate('/checkout/success', { state: { address: addressData } })
+      navigate('/checkout/success', {
+        state: { address: addressData, paymentType },
+      })
     }
   }
-
-  // returns user to home page if cart is empty
-  useEffect(() => {
-    if (totalItems <= 0) navigate('/')
-  }, [navigate, totalItems])
 
   return (
     <CheckoutContainer>
@@ -171,7 +171,7 @@ export function Checkout() {
 
             <strong>Total R$ {formatCurrency(total)}</strong>
 
-            <ButtonConfirmOrder type="submit">
+            <ButtonConfirmOrder type="submit" disabled={isSubmitting}>
               Confirmar pedido
             </ButtonConfirmOrder>
           </SelectProductsCard>

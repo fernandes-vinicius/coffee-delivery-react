@@ -1,4 +1,5 @@
-import { useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import { CurrencyDollar, MapPin, Timer } from 'phosphor-react'
 
@@ -18,7 +19,16 @@ import {
 
 export function CheckoutSuccess() {
   const location = useLocation()
-  const address = location.state.address
+  const navigate = useNavigate()
+
+  const address = location.state?.address
+  const paymentType = location.state?.paymentType
+
+  useEffect(() => {
+    if (!address || !paymentType) {
+      navigate('/')
+    }
+  }, [address, navigate, paymentType])
 
   return (
     <CheckoutSuccessContainer>
@@ -34,10 +44,10 @@ export function CheckoutSuccess() {
             <span>
               Entrega em{' '}
               <b>
-                {address.street}, {address.number}
+                {address?.street}, {address?.number}
               </b>{' '}
               <br />
-              {address.district} - {address.city}, {address.state}
+              {address?.district} - {address?.city}, {address?.state}
             </span>
           </OrderInfoItem>
 
@@ -57,7 +67,7 @@ export function CheckoutSuccess() {
             </OrderInfoIconPayment>
             <span>
               Pagamento na entrega <br />
-              <b>Cartão de Crédito</b>
+              <b>{paymentType}</b>
             </span>
           </OrderInfoItem>
         </OrderInfoContainer>
