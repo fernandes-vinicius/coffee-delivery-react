@@ -39,11 +39,15 @@ const addressFormValidationSchema = z.object({
 
 export type AddressFormData = z.infer<typeof addressFormValidationSchema>
 
-export type PaymentTypes = 'credit_card' | 'debit_card' | 'money'
+export enum PaymentTypes {
+  'credit_card' = 'Cartão de Crédito',
+  'debit_card' = 'Cartão de Débito',
+  'money' = 'Dinheiro',
+}
 
 export interface IOrderData {
   address: AddressFormData
-  paymentType: PaymentTypes
+  paymentType: `${PaymentTypes}`
   sumTotalItems: number
   deliveryFee: number
   total: number
@@ -52,7 +56,7 @@ export interface IOrderData {
 export function Checkout() {
   const navigate = useNavigate()
 
-  const [paymentType, setPaymentType] = useState<PaymentTypes | null>(null)
+  const [paymentType, setPaymentType] = useState<`${PaymentTypes}` | null>(null)
 
   const addressForm = useForm<AddressFormData>({
     resolver: zodResolver(addressFormValidationSchema),

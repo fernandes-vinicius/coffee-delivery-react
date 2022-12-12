@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import { Bank, CreditCard, CurrencyDollar, Money } from 'phosphor-react'
 
 import { PaymentTypes } from '~/pages/Checkout'
@@ -13,18 +11,18 @@ import {
 } from './styles'
 
 interface PaymentProps {
-  value: PaymentTypes | null
-  onChange: (paymentType: PaymentTypes) => void
+  value: `${PaymentTypes}` | null
+  onChange: (paymentType: `${PaymentTypes}`) => void
 }
 
 export function Payment({ value: paymentType, onChange }: PaymentProps) {
-  function handleChangePaymentType(newPaymentType: PaymentTypes) {
+  function handleChangePaymentType(newPaymentType: `${PaymentTypes}`) {
     onChange(newPaymentType)
   }
 
-  const isCreditCardSelected = paymentType === 'credit_card'
-  const isDebitCardSelected = paymentType === 'debit_card'
-  const isMoneySelected = paymentType === 'money'
+  const isCreditCardSelected = paymentType === 'Cartão de Crédito'
+  const isDebitCardSelected = paymentType === 'Cartão de Débito'
+  const isMoneySelected = paymentType === 'Dinheiro'
 
   return (
     <PaymentContainer>
@@ -42,21 +40,21 @@ export function Payment({ value: paymentType, onChange }: PaymentProps) {
       <PaymentOptionsContainer>
         <PaymentOption
           selected={isCreditCardSelected}
-          onClick={() => handleChangePaymentType('credit_card')}
+          onClick={() => handleChangePaymentType('Cartão de Crédito')}
         >
           <CreditCard size={16} /> Cartão de crédito
         </PaymentOption>
 
         <PaymentOption
           selected={isDebitCardSelected}
-          onClick={() => handleChangePaymentType('debit_card')}
+          onClick={() => handleChangePaymentType('Cartão de Débito')}
         >
           <Bank size={16} /> Cartão de débito
         </PaymentOption>
 
         <PaymentOption
           selected={isMoneySelected}
-          onClick={() => handleChangePaymentType('money')}
+          onClick={() => handleChangePaymentType('Dinheiro')}
         >
           <Money size={16} /> Dinheiro
         </PaymentOption>
