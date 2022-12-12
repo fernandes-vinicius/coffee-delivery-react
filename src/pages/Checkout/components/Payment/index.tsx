@@ -13,15 +13,13 @@ import {
 } from './styles'
 
 interface PaymentProps {
-  onChangePaymentType: (paymentType: PaymentTypes) => void
+  value: PaymentTypes | null
+  onChange: (paymentType: PaymentTypes) => void
 }
 
-export function Payment({ onChangePaymentType }: PaymentProps) {
-  const [paymentType, setPaymentType] = useState<PaymentTypes | null>(null)
-
+export function Payment({ value: paymentType, onChange }: PaymentProps) {
   function handleChangePaymentType(newPaymentType: PaymentTypes) {
-    setPaymentType(newPaymentType)
-    onChangePaymentType(newPaymentType)
+    onChange(newPaymentType)
   }
 
   const isCreditCardSelected = paymentType === 'credit_card'

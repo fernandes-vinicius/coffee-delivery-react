@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const SuccessContainer = styled.main`
+export const CheckoutSuccessContainer = styled.main`
   display: flex;
   flex-direction: column;
   margin-top: 5rem;

@@ -65,6 +65,13 @@ export function cartReducer(state: ICartState, action: Actions) {
       })
     }
 
+    case ActionTypes.RESET_CART: {
+      return produce(state, (draft) => {
+        draft.cart = []
+        draft.totalItems = 0
+      })
+    }
+
     default:
       return state
   }

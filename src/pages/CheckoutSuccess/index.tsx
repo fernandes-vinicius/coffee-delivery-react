@@ -1,11 +1,11 @@
+import { useLocation } from 'react-router-dom'
+
 import { CurrencyDollar, MapPin, Timer } from 'phosphor-react'
 
 import deliveryIllustrationImg from '~/assets/delivery-illustration.svg'
 
-import { AddressFormData } from '~/pages/Checkout'
-
 import {
-  SuccessContainer,
+  CheckoutSuccessContainer,
   ContentBox,
   OrderInfoContainer,
   OrderInfoIconLocal,
@@ -16,13 +16,12 @@ import {
   Title,
 } from './styles'
 
-interface SuccessProps {
-  address: AddressFormData
-}
+export function CheckoutSuccess() {
+  const location = useLocation()
+  const address = location.state.address
 
-export default function Success({ address }: SuccessProps) {
   return (
-    <SuccessContainer>
+    <CheckoutSuccessContainer>
       <Title>Uhu! Pedido confirmado</Title>
       <Subtitle>Agora é só aguardar que logo o café chegará até você</Subtitle>
 
@@ -65,6 +64,6 @@ export default function Success({ address }: SuccessProps) {
 
         <img src={deliveryIllustrationImg} alt="" />
       </ContentBox>
-    </SuccessContainer>
+    </CheckoutSuccessContainer>
   )
 }

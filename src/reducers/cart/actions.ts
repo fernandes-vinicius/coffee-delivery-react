@@ -5,6 +5,7 @@ export enum ActionTypes {
   ADD_PRODUCT = 'ADD_PRODUCT',
   REMOVE_PRODUCT = 'REMOVE_PRODUCT',
   UPDATE_PRODUCT_AMOUNT = 'UPDATE_PRODUCT_AMOUNT',
+  RESET_CART = 'RESET_CART',
 }
 
 type AddProductActionType = IAction<
@@ -22,10 +23,13 @@ type UpdateProductAmountActionType = IAction<
   { productId: number; amount: number }
 >
 
+type ResetCartActionType = IAction<typeof ActionTypes.RESET_CART, {}>
+
 export type Actions =
   | AddProductActionType
   | RemoveProductActionType
   | UpdateProductAmountActionType
+  | ResetCartActionType
 
 export function addProductAction(product: IProduct, amount: number) {
   return createAction(ActionTypes.ADD_PRODUCT, { product, amount })
@@ -37,4 +41,8 @@ export function removeProductAction(productId: number) {
 
 export function updateProductAmountAction(productId: number, amount: number) {
   return createAction(ActionTypes.UPDATE_PRODUCT_AMOUNT, { productId, amount })
+}
+
+export function resetCartAction() {
+  return createAction(ActionTypes.RESET_CART, {})
 }

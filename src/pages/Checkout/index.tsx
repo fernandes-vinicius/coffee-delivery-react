@@ -12,7 +12,6 @@ import { formatCurrency } from '~/utils/formatCurrency'
 
 import { AddressForm } from './components/AddressForm'
 import { Payment } from './components/Payment'
-import Success from './components/Success'
 import {
   ButtonConfirmOrder,
   ButtonRemove,
@@ -54,7 +53,6 @@ export function Checkout() {
   const navigate = useNavigate()
 
   const [paymentType, setPaymentType] = useState<PaymentTypes | null>(null)
-  const [success, setSuccess] = useState(false)
 
   const addressForm = useForm<AddressFormData>({
     resolver: zodResolver(addressFormValidationSchema),
@@ -68,9 +66,10 @@ export function Checkout() {
       state: '',
     },
   })
-  const { handleSubmit, watch } = addressForm
+  const { handleSubmit, reset: resetForm } = addressForm
 
-  const { cart, totalItems, removeProduct, updateProductAmount } = useCart()
+  const { cart, totalItems, removeProduct, updateProductAmount, resetCart } =
+    useCart()
 
   const sumTotalItems = cart.reduce((acc, currentValue) => {
     acc += currentValue.price * currentValue.amount
@@ -99,7 +98,12 @@ export function Checkout() {
 
       console.log('orderData', orderData)
 
-      setSuccess(true)
+      resetForm()
+      resetCart()
+
+      setPaymentType(null)
+
+      navigate('/checkout/success', { state: { address: addressData } })
     }
   }
 
@@ -107,11 +111,6 @@ export function Checkout() {
   useEffect(() => {
     if (totalItems <= 0) navigate('/')
   }, [navigate, totalItems])
-
-  if (success) {
-    const address = watch()
-    return <Success address={address} />
-  }
 
   return (
     <CheckoutContainer>
@@ -124,7 +123,8 @@ export function Checkout() {
           </FormProvider>
 
           <Payment
-            onChangePaymentType={(newPaymentType) => {
+            value={paymentType}
+            onChange={(newPaymentType) => {
               setPaymentType(newPaymentType)
             }}
           />
